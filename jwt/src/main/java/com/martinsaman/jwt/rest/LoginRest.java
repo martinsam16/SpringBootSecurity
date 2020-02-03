@@ -5,10 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -19,13 +16,10 @@ import java.util.stream.Collectors;
 public class LoginRest {
 
     @PostMapping
-    public Login loguearse(@RequestParam("user") String username, @RequestParam("password") String pwd) {
+    Login loguearse(@RequestBody Login login) {
 
-        //Si existe en db o external auth
-        Login login = new Login();
-        login.setToken(this.getJWTToken(username));
-        login.setNomuser(username);
-        login.setPssw(pwd);
+        //Consumir un servicio de validación
+        login.setToken(this.getJWTToken(login.getNomuser()));
         return login;
     }
 
